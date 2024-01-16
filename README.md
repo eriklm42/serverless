@@ -10,6 +10,6 @@
 [] - CI/CD
 [] - Verifier qualify code on code review
 [] - Error handling
-
+[] - Authentication
 
 
