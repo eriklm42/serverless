@@ -17,10 +17,13 @@
 <br>
 [ ] Environments
     <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;
     [ ] LOCAL
     <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;
     [ ] DEV
     <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;
     [ ] PROD
 <br>
 [ ] CI/CD
