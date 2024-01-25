@@ -3,12 +3,17 @@
 <br>
 [ ] Error handling
 <br>
-[ ] Logger
-<br>
-[ ] Authentication
-<br>
-[ ] Observability
-<br>
+[ ] Service Mesh
+    <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    [ ] Logger
+    <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    [ ] Authentication
+    <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    [ ] Observability
+    <br>
 [ ] Platform documentation
 <br>
 [ ] Integration Database
