@@ -1,0 +1,21 @@
+service: test
+provider:
+  name: aws
+  runtime: nodejs20.x
+  stage: dev
+  region: us-east-1
+  environment:
+    VARIABLE_ONE: value_one
+    VARIABLE_TWO: value_two
+plugins: 
+  - serverless-offline
+package: 
+   excludeDevDependencies: true
+
+functions:
+  test:
+    handler: handler.main
+    events:
+      - http:
+          path: hello
+          method: get

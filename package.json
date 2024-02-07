@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "offline-start": "export NODE_TLS_REJECT_UNAUTHORIZED=0 && export SLS_DEBUG=* && serverless offline start --stage dev --running offline",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
