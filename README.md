@@ -3,6 +3,8 @@
 <br>
 [ ] Error handling
 <br>
+[ ] Debugger
+<br>
 [ ] Service Mesh
     <br>
     &nbsp;&nbsp;&nbsp;&nbsp;
