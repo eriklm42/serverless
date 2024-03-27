@@ -1,4 +1,4 @@
-export const endpoints = {
+export const routes = {
 	test: {
 		handler: "handler.main",
 		events: [

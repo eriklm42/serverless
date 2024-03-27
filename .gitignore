@@ -1,25 +1,17 @@
-# compiled output
-/dist
-/node_modules
+# Compiled output
+dist/
+
+# Dependency directories
+node_modules/
+pnpm-lock.yaml
+yarn.lock
 
 # Logs
-logs
+logs/
 *.log
-npm-debug.log*
-pnpm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-lerna-debug.log*
-
-# OS
-.DS_Store
-
-# Tests
-/coverage
-/.nyc_output
 
 # IDEs and editors
-/.idea
+.idea/
 .project
 .classpath
 .c9/
@@ -28,8 +20,18 @@ lerna-debug.log*
 *.sublime-workspace
 
 # IDE - VSCode
-.vscode/*
+.vscode/
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
+# OS generated files
+.DS_Store
+
+# Test coverage and reports
+coverage/
+.nyc_output/
+
+# Package manager files
+package-lock.json

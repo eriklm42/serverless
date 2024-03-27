@@ -1,110 +1,37 @@
-import * as fs from "fs";
-import { join } from "path";
-import { spawn, spawnSync } from "child_process";
-import yargs from "yargs";
+import { spawnSync } from 'child_process';
+import * as path from 'path';
 
-interface Args {
-	c?: string;
-	i?: string;
-	e?: string;
-	s?: string;
-	a?: boolean;
-	p?: string;
-	[key: string]: unknown;
+function findArgIndex(arg: string): number {
+	const index = process.argv.indexOf(arg);
+	return index !== -1 ? index + 1 : -1;
 }
 
-const parseArgs = async (): Promise<Args> => yargs.parse();
+const serviceIndex = findArgIndex('-s');
+const environmentIndex = findArgIndex('-e');
+const commandIndex = findArgIndex('-c');
 
-const main = async (): Promise<void> => {
-	const args: Args = await parseArgs();
+if (serviceIndex === -1 || environmentIndex === -1 || serviceIndex >= process.argv.length || environmentIndex >= process.argv.length) {
+	console.error('Uso: node service-runner.js -s <serviço> -e <ambiente>');
+	process.exit(1);
+}
 
-	const runner: string = /^win/.test(process.platform) ? "yarn.cmd" : "yarn";
+console.log({ argv: process.argv });
 
-	const sites: string[] = ["backoffice", "site"];
+const service = process.argv[serviceIndex];
+const command = process.argv.slice(commandIndex).join(' ');
+// const environment = process.argv[environmentIndex];
 
-	const command: string | undefined = args.c;
-	const includes: string | undefined = args.i;
-	const stage: string | undefined = args.s;
-	const isAsync: boolean = !!args.a;
-	const parameters: string | undefined = args.p;
+// Caminho para o diretório do serviço
+const servicePath = path.join(__dirname, '..', 'src', 'adapters', 'services', service);
 
-	const path: string = "src/services";
+// Executar o comando serverless offline start com os argumentos fornecidos dentro da pasta do serviço
+const result = spawnSync(`sls ${command}`, { cwd: servicePath, shell: true, stdio: 'inherit' });
 
-	let dirs: string[] = fs.readdirSync(path);
+// Encerrar o processo pai se houver um erro na execução do comando
+if (result.error) {
+	console.error(result.error);
+	process.exit(1);
+}
 
-	dirs = dirs.filter((item) => item === includes);
-
-	const options: string[] = [
-		command,
-		"--force",
-		...(stage ? ["--stage", stage] : []),
-		...(parameters ? [parameters] : []),
-	];
-
-	const executeAsync = async (
-		servicePath: string,
-		currentOptions: string[],
-	): Promise<void> => {
-		return new Promise<void>((resolve, reject) => {
-			const proc = spawn(runner, currentOptions, {
-				env: process.env,
-				cwd: servicePath,
-				stdio: "inherit",
-			});
-
-			proc.on("exit", (code) => {
-				if (code !== 0) {
-					reject(new Error(`Failed execution. Exit code ${code}`));
-				} else {
-					resolve();
-				}
-			});
-		});
-	};
-
-	const executeSync = (servicePath: string, currentOptions: string[]): void => {
-		const proc = spawnSync(runner, currentOptions, {
-			env: process.env,
-			cwd: servicePath,
-			stdio: "inherit",
-		});
-
-		if (proc.status !== 0) {
-			throw new Error(`Failed execution. Exit code ${proc.status}`);
-		}
-	};
-
-	const executeCommand = async (
-		servicePath: string,
-		currentOptions: string[],
-	): Promise<void> => {
-		if (isAsync) {
-			await executeAsync(servicePath, currentOptions);
-		} else {
-			executeSync(servicePath, currentOptions);
-		}
-	};
-
-	for (let i = 0; i < dirs.length; i++) {
-		const currentOptions: string[] = [...options];
-		const servicePath: string = join(process.cwd(), path, dirs[i]);
-
-		if (sites.includes(dirs[i])) {
-			const stageIndex: number = currentOptions.indexOf("--stage");
-			if (stageIndex !== -1) {
-				currentOptions.splice(stageIndex, 2);
-				currentOptions[0] += `:${stage}`;
-			}
-		}
-
-		try {
-			await executeCommand(servicePath, currentOptions);
-		} catch (error) {
-			console.error(error);
-		}
-	}
-};
-
-main().catch((error) => {
-	console.error(error);
-});
+// Encerrar o processo pai com o código de saída do comando filho
+process.exit(result.status || 0);

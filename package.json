@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "offline-start": "tsc && export ISOFFLINE=true && npm run multi-runner -a -c offline-start",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "multi-runner": "export NODE_OPTIONS=--max-old-space-size=5096 && node ./dist/src/config/service-runner.js"
+    "offline-start": "npx ts-node && npm run multi-runner",
+    "test": "tsc --watch",
+    "multi-runner": "ts-node src/config/service-runner.ts"
   },
   "repository": {
     "type": "git",
