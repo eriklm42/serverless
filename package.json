@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "offline-start": "npx ts-node && npm run multi-runner",
+    "offline-start": "npx tsc && npm run multi-runner",
     "test": "tsc --watch",
     "multi-runner": "ts-node src/config/service-runner.ts"
   },
