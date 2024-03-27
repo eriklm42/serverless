@@ -1,37 +1,61 @@
-import { spawnSync } from 'child_process';
-import * as path from 'path';
+import { spawnSync } from "child_process";
+import * as path from "path";
+import { parse as getArgs } from "yargs";
+import { ParsedArgs } from "src/models";
 
-function findArgIndex(arg: string): number {
-	const index = process.argv.indexOf(arg);
-	return index !== -1 ? index + 1 : -1;
+async function main() {
+	let args: unknown;
+	try {
+		args = await getArgs();
+		if (!isParsedArgs(args))
+			throw new Error("Parsed arguments do not match expected format.");
+	} catch (error) {
+		console.error("Error parsing arguments:", error);
+		process.exit(1);
+	}
+
+	const { c: command, s: service, e: environment } = args as ParsedArgs;
+
+	if (!command || !service || !environment) {
+		console.error(
+			"Uso: node service-runner.js -s <service> -e <environment> -c <command>",
+		);
+		process.exit(1);
+	}
+
+	const servicePath = path.join(
+		__dirname,
+		"..",
+		"adapters",
+		"services",
+		service,
+	);
+
+	const result = spawnSync("yarn", [command], {
+		env: process.env,
+		cwd: servicePath,
+		stdio: "inherit",
+	});
+
+	if (result.error) {
+		console.error(result.error);
+		process.exit(1);
+	}
+
+	process.exit(result.status || 0);
 }
 
-const serviceIndex = findArgIndex('-s');
-const environmentIndex = findArgIndex('-e');
-const commandIndex = findArgIndex('-c');
+function isParsedArgs(args: unknown): args is ParsedArgs {
+	return (
+		typeof args === "object" &&
+		args !== null &&
+		typeof (args as ParsedArgs).c === "string" &&
+		typeof (args as ParsedArgs).s === "string" &&
+		typeof (args as ParsedArgs).e === "string"
+	);
+}
 
-if (serviceIndex === -1 || environmentIndex === -1 || serviceIndex >= process.argv.length || environmentIndex >= process.argv.length) {
-	console.error('Uso: node service-runner.js -s <serviço> -e <ambiente>');
+main().catch((error) => {
+	console.error("Error occurred:", error);
 	process.exit(1);
-}
-
-console.log({ argv: process.argv });
-
-const service = process.argv[serviceIndex];
-const command = process.argv.slice(commandIndex).join(' ');
-// const environment = process.argv[environmentIndex];
-
-// Caminho para o diretório do serviço
-const servicePath = path.join(__dirname, '..', 'src', 'adapters', 'services', service);
-
-// Executar o comando serverless offline start com os argumentos fornecidos dentro da pasta do serviço
-const result = spawnSync(`sls ${command}`, { cwd: servicePath, shell: true, stdio: 'inherit' });
-
-// Encerrar o processo pai se houver um erro na execução do comando
-if (result.error) {
-	console.error(result.error);
-	process.exit(1);
-}
-
-// Encerrar o processo pai com o código de saída do comando filho
-process.exit(result.status || 0);
+});

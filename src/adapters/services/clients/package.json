@@ -4,7 +4,7 @@
   "main": "index.js",
   "author": "Tentáculo.Digital (contato@tentaculo.digital)",
   "scripts": {
-    "offline-start": "export NODE_TLS_REJECT_UNAUTHORIZED=0 && export DEBUG_DEPTH=5 && serverless offline start --env off --running offline --noTimeout",
+    "offline-start": "serverless offline start",
     "service-pack": "export SLS_DEBUG=* && serverless package --verbose",
     "deploy": "export SLS_DEBUG=* && serverless deploy --package .serverless"
   },

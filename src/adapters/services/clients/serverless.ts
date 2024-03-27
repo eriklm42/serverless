@@ -1,17 +1,16 @@
 import BaseServerless from "../../../config/serverless";
-import { routes } from "./routes"
+import { routes } from "./routes";
 
-const configServiceTest = {
+module.exports = {
 	...BaseServerless,
-	service: "clients",
+	service: "serv-clients",
 	custom: {
+		...BaseServerless.custom,
 		"serverless-offline": {
-			...BaseServerless["serverless-offline"],
+			...BaseServerless.custom["serverless-offline"],
 			httpPort: 3000,
 			lambdaPort: 3001,
 		},
 	},
 	functions: routes,
 };
-
-export default configServiceTest
