@@ -3,10 +3,17 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "node": ">=20.11.0"
+  },
   "scripts": {
-    "offline-start": "yarn tsc && yarn multi-runner -c offline-start",
-    "test": "tsc --watch",
-    "multi-runner": "ts-node src/config/service-runner.ts"
+    "offline:start": "yarn tsc && yarn multi:runner -c offline-start",
+    "multi:runner": "ts-node src/config/service-runner.ts",
+    "test": "npm run test:unit && npm run test:e2e",
+    "test:debug": "IS_OFFLINE=true node --inspect --experimental-vm-modules ./node_modules/.bin/jest --runInBand --watch",
+    "test:e2e": "IS_OFFLINE=true node --experimental-vm-modules ./node_modules/.bin/jest --runInBand test/e2e",
+    "test:unit": "IS_OFFLINE=true node --experimental-vm-modules ./node_modules/.bin/jest --runInBand test/unit",
+    "test:watch": "IS_OFFLINE=true node --experimental-vm-modules ./node_modules/.bin/jest --runInBand --watchAll"
   },
   "repository": {
     "type": "git",
