@@ -1,6 +1,12 @@
+import { randomUUID } from "crypto";
+
 export const handler = () => {
-  return {
-    status: 200,
-    message: "Hello Words"
-  }
-}
+	const test = randomUUID();
+
+	console.log(test);
+
+	return {
+		status: 200,
+		message: test,
+	};
+};
