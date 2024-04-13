@@ -28,7 +28,7 @@ const baseServerlessConfig = {
 			dashboards: true,
 			topics: {
 				alarm: {
-					topic: `arn:aws:sns:sa-east-1:273670557987:lambda-alarms`,
+					topic: "arn:aws:sns:sa-east-1:273670557987:lambda-alarms",
 				},
 			},
 		},
