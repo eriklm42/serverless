@@ -32,6 +32,10 @@ const baseServerlessConfig = {
 				},
 			},
 		},
+		prune: {
+			automatic: true,
+			number: 10,
+		},
 	},
 	resources: {
 		Resources: {
