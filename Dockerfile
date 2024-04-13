@@ -4,8 +4,8 @@ WORKDIR /src
 
 COPY package.json package-lock.json  /src/
 
-RUN yarn ci --silent
+RUN yarn install --silent
 
 COPY . .
 
-CMD yarn start
+CMD yarn offline:start -s test -e dev
