@@ -17,6 +17,21 @@ const baseServerlessConfig = {
 		"serverless-offline": {
 			noPrependStageInUrl: true,
 		},
+		alerts: {
+			stages: ["dev", "prod"],
+			alarms: [
+				"functionErrors",
+				"functionThrottles",
+				"functionInvocations",
+				"functionDuration",
+			],
+			dashboards: true,
+			topics: {
+				alarm: {
+					topic: `arn:aws:sns:sa-east-1:273670557987:lambda-alarms`,
+				},
+			},
+		},
 	},
 	resources: {
 		Resources: {
