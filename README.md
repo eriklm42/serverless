@@ -8,7 +8,7 @@
 [ ] Service Mesh
     <br>
     &nbsp;&nbsp;&nbsp;&nbsp;
-    [ ] Logger
+    [X] Logger
     <br>
     &nbsp;&nbsp;&nbsp;&nbsp;
     [ ] Authentication
