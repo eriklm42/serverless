@@ -14,7 +14,7 @@
     [ ] Authentication
     <br>
     &nbsp;&nbsp;&nbsp;&nbsp;
-    [ ] Observability
+    [X] Observability
     <br>
 [ ] Platform documentation
 <br>
