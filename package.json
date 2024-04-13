@@ -9,10 +9,11 @@
   "scripts": {
     "offline:start": "yarn tsc && yarn multi:runner -c offline-start",
     "multi:runner": "ts-node src/config/service-runner.ts",
-    "test": "npm run test:unit && npm run test:e2e",
+    "localstack:up": "docker-compose up -d localstack",
+    "test": "npm run test:unit && npm run test:e2e --coverage[=true]",
     "test:debug": "IS_OFFLINE=true node --inspect --experimental-vm-modules ./node_modules/.bin/jest --runInBand --watch",
-    "test:e2e": "IS_OFFLINE=true node --experimental-vm-modules ./node_modules/.bin/jest --runInBand test/e2e",
-    "test:unit": "IS_OFFLINE=true node --experimental-vm-modules ./node_modules/.bin/jest --runInBand test/unit",
+    "test:e2e": "IS_OFFLINE=true node --experimental-vm-modules ./node_modules/.bin/jest --runInBand tests/e2e",
+    "test:unit": "IS_OFFLINE=true node --experimental-vm-modules ./node_modules/.bin/jest --runInBand tests/unit",
     "test:watch": "IS_OFFLINE=true node --experimental-vm-modules ./node_modules/.bin/jest --runInBand --watchAll"
   },
   "repository": {
@@ -70,7 +71,7 @@
       "ts"
     ],
     "rootDir": "src",
-    "testRegex": ".*\\.spec\\.ts$",
+    "testRegex": ".*\\.test\\.ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
     },
