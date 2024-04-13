@@ -9,7 +9,11 @@ const baseServerlessConfig = {
 			VARIABLE_TWO: "value_two",
 		},
 	},
-	plugins: ["serverless-offline"],
+	plugins: [
+		"serverless-offline",
+		"serverless-prune-plugin",
+		"serverless-plugin-aws-alerts",
+	],
 	package: {
 		excludeDevDependencies: true,
 	},
