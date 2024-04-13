@@ -10,11 +10,12 @@
     "offline:start": "yarn tsc && yarn multi:runner -c offline-start",
     "multi:runner": "ts-node src/config/service-runner.ts",
     "localstack:up": "docker-compose up -d localstack",
-    "test": "npm run test:unit && npm run test:e2e --coverage[=true]",
+    "test": "yarn test:unit && yarn test:e2e && yarn test:coverage",
     "test:debug": "IS_OFFLINE=true node --inspect --experimental-vm-modules ./node_modules/.bin/jest --runInBand --watch",
     "test:e2e": "IS_OFFLINE=true node --experimental-vm-modules ./node_modules/.bin/jest --runInBand tests/e2e",
     "test:unit": "IS_OFFLINE=true node --experimental-vm-modules ./node_modules/.bin/jest --runInBand tests/unit",
-    "test:watch": "IS_OFFLINE=true node --experimental-vm-modules ./node_modules/.bin/jest --runInBand --watchAll"
+    "test:watch": "IS_OFFLINE=true node --experimental-vm-modules ./node_modules/.bin/jest --runInBand --watchAll",
+    "test:coverage": "npx jest --coverage"
   },
   "repository": {
     "type": "git",
