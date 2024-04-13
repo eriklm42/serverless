@@ -13,6 +13,7 @@ const baseServerlessConfig = {
 		"serverless-offline",
 		"serverless-prune-plugin",
 		"serverless-plugin-aws-alerts",
+		"serverless-es-logs",
 	],
 	package: {
 		excludeDevDependencies: true,
@@ -20,6 +21,11 @@ const baseServerlessConfig = {
 	custom: {
 		"serverless-offline": {
 			noPrependStageInUrl: true,
+		},
+		esLogs: {
+			endpoint: "some-elasticsearch-endpoint.us-east-1.es.amazonaws.com",
+			index: "some-index",
+			filterPattern: '[timestamp=*Z, request_id="*-*", event]',
 		},
 		alerts: {
 			stages: ["dev", "prod"],
