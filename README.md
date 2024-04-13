@@ -1,9 +1,9 @@
 ### To do list basic infrastructure: 
 [X] Define architecture
 <br>
-[ ] Error handling
+[X] Error handling
 <br>
-[ ] Debugger
+[X] Debugger
 <br>
 [ ] Service Mesh
     <br>
@@ -20,12 +20,12 @@
 <br>
 [ ] Integration Database
 <br>
-[ ] Tests / Coverage
+[X] Tests / Coverage
 <br>
 [ ] Environments
     <br>
     &nbsp;&nbsp;&nbsp;&nbsp;
-    [ ] LOCAL
+    [X] LOCAL
     <br>
     &nbsp;&nbsp;&nbsp;&nbsp;
     [ ] DEV
